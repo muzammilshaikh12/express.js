@@ -5,14 +5,22 @@ const express = require('express')
 
 const app = express()
 
-app.use((req, res, next)=>{
-    console.log('Hi I am Muzz')
-    next()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded())
+
+app.use('/add-product',(req, res, next)=>{
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><input type="number" name="quantity"><button type="submit">Add Product</button></form>')
+    
 })
 
-app.use((req, res, next)=>{
-    console.log('Hey It muzz again')
-    res.send('<h1>Hi Muzz Here !!!')
+app.post('/product',(req,res,next)=>{
+    console.log(req.body)
+    res.redirect('/')
+})
+
+app.use('/',(req, res, next)=>{
+    res.send('<h1>Hello from Express')
 })
 
 app.listen(4000)
